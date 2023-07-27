@@ -2,12 +2,13 @@ const router = require("express").Router();
 const bcrpt = require("bcrypt");
 
 const { withDB } = require("../dbConnect");
-const { generateAuthToken, validate } = require("../models/user.model")
+const { validate } = require("../models/user.model")
 
 
 router.post("/", async (req, res) => {
     try {
         const { error } = validate(req.body);
+        // console.log(error.details[0].message)
         if (error) {
             return res.status(400).send({ message: error.details[0].message })
         }
@@ -21,7 +22,7 @@ router.post("/", async (req, res) => {
 
             const newUser = { ...req.body, password: hashPassword }
 
-            db.collection("users").insertOne(newUser);
+            await db.collection("users").insertOne(newUser);
 
             res.status(201).send({ message: "User created successfully" })
         }, res);

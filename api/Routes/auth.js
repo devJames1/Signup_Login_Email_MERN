@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 
 const { withDB } = require("../dbConnect");
-const { generateAuthToken, validate } = require("../models/user.model");
+const { generateAuthToken } = require("../models/user.model");
 
 
 
